@@ -1,0 +1,28 @@
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    required:
+      - youtubeClientId
+      - youtubeClientSecret
+      - youtubeRefreshToken
+    properties:
+      youtubeClientId:
+        type: string
+        description: The client ID for the YouTube API
+      youtubeClientSecret:
+        type: string
+        description: The client secret for the YouTube API
+      youtubeRefreshToken:
+        type: string
+        description: The YouTube refresh token for authentication
+  commandFunction: |
+    (config) => ({
+      command: "python",
+      args: ["-m", "src.mcp_youtube_companion.server"],
+      env: {
+        YOUTUBE_CLIENT_ID: config.youtubeClientId,
+        YOUTUBE_CLIENT_SECRET: config.youtubeClientSecret,
+        YOUTUBE_REFRESH_TOKEN: config.youtubeRefreshToken
+      }
+    })
